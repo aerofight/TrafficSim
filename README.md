@@ -1,2 +1,2 @@
 # TrafficSim
-Simulating Traffic to learn python, and OOP basics.
+Simulating Traffic to learn OOP
