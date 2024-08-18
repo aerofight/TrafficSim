@@ -1,42 +1,27 @@
-color = {
-    'black'  : 30,
-    'white'  : 37,
-    'gray'   : 90,
-    'red'    : 91,
-    'green'  : 92,
-    'yellow' : 93,
-    'blue'   : 94,
-    'purple' : 95,
-    'cyan'   : 96
-}
+# Example file showing a basic pygame "game loop"
+import pygame
 
-def print_color(text, color_code, bold = False, new_line = False):
-    bold_code = ''
-    if bold:
-        bold_code = '1;'
+# pygame setup
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+clock = pygame.time.Clock()
+running = True
 
-    if new_line:
-        print("\033[{}{}m{}\033[0m".format(bold_code, color_code, text))
+while running:
+    # poll for events
+    # pygame.QUIT event means the user clicked X to close your window
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-    else:
-        print("\033[{}{}m{}\033[0m".format(bold_code, color_code, text), end='')
+    # fill the screen with a color to wipe away anything from last frame
+    screen.fill("purple")
 
-print_color('gray', color['gray'], True)
-print_color('white', color['white'], True)
-print_color('black', color['black'], True)
-print_color('red', color['red'], True)
-print_color('green', color['green'], True)
-print_color('yellow', color['yellow'], True)
-print_color('blue', color['blue'], True)
-print_color('purple', color['purple'], True)
-print_color('cyan', color['cyan'], True, True)
+    # RENDER YOUR GAME HERE
 
-print_color('gray', color['gray'])
-print_color('white', color['white'])
-print_color('black', color['black'])
-print_color('red', color['red'])
-print_color('green', color['green'])
-print_color('yellow', color['yellow'])
-print_color('blue', color['blue'])
-print_color('purple', color['purple'])
-print_color('cyan', color['cyan'])
+    # flip() the display to put your work on screen
+    pygame.display.flip()
+
+    clock.tick(60)  # limits FPS to 60
+
+pygame.quit()
