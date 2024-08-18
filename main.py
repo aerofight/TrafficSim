@@ -1,28 +1,42 @@
-class Print:  #custom printing class
-    def __init__(self):
-        pass
+color = {
+    'black'  : 30,
+    'white'  : 37,
+    'gray'   : 90,
+    'red'    : 91,
+    'green'  : 92,
+    'yellow' : 93,
+    'blue'   : 94,
+    'purple' : 95,
+    'cyan'   : 96
+}
 
-    def color(text, color):  # the function that allows for the print class to take an input color
-        color_code = "white"
-        if color == "gray":
-            color_code = 90
-        elif color == "red":
-            color_code = 91
-        elif color == "green":
-            color_code = 92
-        elif color == "yellow":
-            color_code = 93
-        elif color == "blue":
-            color_code = 94
-        elif color == "purple":
-            color_code = 95
-        elif color == "cyan":
-            color_code = 96
+def print_color(text, color_code, bold = False, new_line = False):
+    bold_code = ''
+    if bold:
+        bold_code = '1;'
 
-        print("\033[{}m {}\033[00m".format(color_code, text))
+    if new_line:
+        print("\033[{}{}m{}\033[0m".format(bold_code, color_code, text))
 
+    else:
+        print("\033[{}{}m{}\033[0m".format(bold_code, color_code, text), end='')
 
-array = ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*',
-         '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*']
+print_color('gray', color['gray'], True)
+print_color('white', color['white'], True)
+print_color('black', color['black'], True)
+print_color('red', color['red'], True)
+print_color('green', color['green'], True)
+print_color('yellow', color['yellow'], True)
+print_color('blue', color['blue'], True)
+print_color('purple', color['purple'], True)
+print_color('cyan', color['cyan'], True, True)
 
-Print.color(" ".join(str(x) for x in array), "green")
+print_color('gray', color['gray'])
+print_color('white', color['white'])
+print_color('black', color['black'])
+print_color('red', color['red'])
+print_color('green', color['green'])
+print_color('yellow', color['yellow'])
+print_color('blue', color['blue'])
+print_color('purple', color['purple'])
+print_color('cyan', color['cyan'])
