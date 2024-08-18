@@ -1,5 +1,6 @@
-class pr: #custom printing class
-    def color(text, color): # the function that allows for the print class to take an input color
+class pr:  #custom printing class
+    def color(text, color):  # the function that allows for the print class to take an input color
+        colorCode = "white";
         if color == "gray":
             colorCode = 90
         elif color == "red":
@@ -15,10 +16,10 @@ class pr: #custom printing class
         elif color == "cyan":
             colorCode = 96
 
-        print("\033[{}m {}\033[00m" .format(colorCode, text))
+        print("\033[{}m {}\033[00m".format(colorCode, text))
 
 
-array = ['*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*',
-         '*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*','*']
+array = ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*',
+         '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*']
 
-pr.color(" ".join(str(x) for x in array),"green")
+pr.color(" ".join(str(x) for x in array), "green")
