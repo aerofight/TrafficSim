@@ -1,27 +1,73 @@
-# Example file showing a basic pygame "game loop"
+import math
 import pygame
+import sys
 
-# pygame setup
+# Initialize Pygame
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+
+# Set up some constants
+WIDTH, HEIGHT = 1280, 960
+
+# Set up the display and clock
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 running = True
+dt = 0
+frame_rate_cap = 120
 
-while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+# Create a surface for the rectangle
+# Should limit speed for an object to move 10% of the screen per second
+rect_surface_speed = math.sqrt(WIDTH * HEIGHT) * 0.1 / frame_rate_cap
+rect_surface_width, rect_surface_height = 25, 25
+rect_surface = pygame.Surface((rect_surface_width, rect_surface_height))  # width, height
+rect_surface.fill((0, 0, 255))  # fill the surface with red
+rect_surface_pos = pygame.Vector2(WIDTH / 2 - rect_surface_width / 2, HEIGHT / 2 - rect_surface_height / 2)
+
+button_surface = pygame.Surface((100, 100))
+button_surface.fill((255, 0, 0))
+
+# Game loop
+while True:
+    # Handle exit event
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            pygame.quit()
+            sys.exit()
 
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    # Clear the screen
+    screen.fill('black')
 
-    # RENDER YOUR GAME HERE
+    # Draw the rectangle surface onto the screen
+    screen.blit(rect_surface, (rect_surface_pos.x, rect_surface_pos.y))  # x, y coordinates
 
-    # flip() the display to put your work on screen
+    key_press = pygame.key.get_pressed()
+    if key_press[pygame.K_w]:
+        rect_surface_pos.y -= rect_surface_speed
+    if key_press[pygame.K_s]:
+        rect_surface_pos.y += rect_surface_speed
+    if key_press[pygame.K_a]:
+        rect_surface_pos.x -= rect_surface_speed
+    if key_press[pygame.K_d]:
+        rect_surface_pos.x += rect_surface_speed
+
+    # Draw the button
+    screen.blit(button_surface, (100, 100))
+
+    # Button checks
+    if (pygame.mouse.get_pos()[0] > 100 and
+        pygame.mouse.get_pos()[0] < 200 and
+        pygame.mouse.get_pos()[1] > 100 and
+        pygame.mouse.get_pos()[1] < 200 and
+        pygame.mouse.get_pressed()[0]):
+
+        button_surface.fill((0, 255, 0))
+    else:
+        button_surface.fill((255, 0, 0))
+
+    # Update the display
     pygame.display.flip()
 
-    clock.tick(60)  # limits FPS to 60
-
-pygame.quit()
+    # limits FPS to the frame_rate_cap
+    # dt is delta time in seconds since last frame, used for framerate-
+    # independent physics.
+    dt = clock.tick(frame_rate_cap) / 1000
